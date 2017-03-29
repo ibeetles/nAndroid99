@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+body {
+    font-family: "Helvetica Neue",Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+
+    width: 1220px;
+    /*margin-left: 8px;*/
+
+    /*Make the body content in the middle of the web browser*/
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.textContainer td {
+    vertical-align: middle;
+}
+
+.tbllegend {
+    float:left;
+    width:20%;
+    height: 45px;
+}
+
+.legenditem {
+    float:left;
+    height: 45px;
+    font-family: 'Droid Sans';
+    font-size: x-small;
+    padding-top: 20px;
+    /*font-weight: bold;*/
+}
