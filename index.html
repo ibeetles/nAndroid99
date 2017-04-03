@@ -16,6 +16,19 @@
     </head>
 
     <body ng-controller="ngNFeatureAdoptionListCtrl" ng-init="init()">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar-scroll" >
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" align="left" >
+                        <img src="assets/img/logo-android-green_1x.png" alt="Android Partner team" width="110px">
+                    </a>
+                </div>
+                <div  style="float: left; width: 80%;">
+                    <a href="https://mincheoulkim.users.x20web.corp.google.com/www/nAndroid99/index.html" style="text-decoration: none;"><h3 align="center" style="font-weight: bold; color: black;">{{appTitle}}</h3></a>
+                </div>
+            </div>
+        </nav>
+
         <div style="margin-bottom: 80px;">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar-scroll" >
                 <div class="container">
@@ -27,7 +40,7 @@
                     <div  style="float: left; width: 80%;">
                         <a href="https://mincheoulkim.users.x20web.corp.google.com/www/nAndroid99/index.html" style="text-decoration: none;"><h3 align="center" style="font-weight: bold; color: black;">{{appTitle}}</h3></a>
                     </div>
-                </div>
+               </div>
             </nav>
         </div>
 
@@ -36,14 +49,15 @@
             <h5>
                 Partner & Device data come from 'Flagship and Fast Follower Schedule - N & O 2017' (<a href='https://docs.google.com/spreadsheets/d/1uhWdheS5pGyHDjSL36FlnR__nYmgix6mucMvMgtkvpE/edit#gid=327487772' target='_blank'>go/ape-flagships</a>), and feature adoption information is based on OEM TAM response. Please note that current status information is a snapshot of adoption information as of <span class='text-danger'> {{buganizerdate}}</span>
             </h5>
-            <p><i>If nothing shows, please open new tab and navigate to <span class='text-danger'>'moma/'</span> to get credential.</i></p>
+            <p><i>If nothing shows, please open new tab and navigate to <span class='text-danger'>'plx/'</span> to get credential.</i></p>
         </div>
+
 
         <div class="tabbable" style="margin-bottom: 18px;">
             <div style="float:left; width:80%;">
                 <ul class="nav nav-tabs" ng-cloak>
                     <li class="active"><a href="#">N/N MR1</a></li>
-                    <li class="nav-link"><a href="OC.html">O/OC</a></li>
+                    <li class="nav-link disabled"><a href="">O/OC</a></li>
                 </ul>
             </div>
             <div class = "tbllegend">

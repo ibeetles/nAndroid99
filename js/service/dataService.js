@@ -11,9 +11,9 @@
             // We will indentify Android version by Hotlist (N:AndroidNFeatureAdoption, O:AndroidOFeatureAdoption)
             var hotlist_ids = '';
             if(version === 'NFeature')
-                hotlist_ids = '466180'; // AndroidNFeatureAdoption
+                hotlist_ids = '466180'; // AndroidNFeatureAdoption   --> N feature survey hotlist name
             else
-                hotlist_ids = '466180'; // this is temporary value which should be replaced by AndroidOFeatureAdoption
+                hotlist_ids = '469088'; // AndroidOFeatureAdoption   --> O feature survey hotlist name
 
             return  "SET sql_dialect GoogleSQL; " +
                     "SELECT  a.bug_id as bug_id, " +
