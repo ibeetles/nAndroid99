@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app ='ngAndroidNext99' ng-cloak>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Android Feature Adoption Analysis</title>
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Droid+Sans">
+    <link href="css/main.css" rel="stylesheet">
+    <!-- This is for adding new statement for enabling API -->
+</head>
+
+<body ng-controller="ngNeoNFeatureAdoptionListCtrl" ng-init="handleClientLoad()">
+
+<h3 align="center" style="font-weight: bold; color: black;">Android Feature Adoption(go/ape-fas)</h3>
+
+
+<!-- It is from Google Hosted Libraries https://developers.google.com/speed/libraries/ -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script src="bower_components/angular-smart-table/dist/smart-table.js"></script> <!--smart table  -->
+
+<!--Aplos -->
+<script src="https://data.corp.google.com/aplos/versions/aplos-v1_2.js"></script>
+<script src='https://login.corp.google.com/javascript_api.js'></script>
+<script src="//apis.google.com/js/client.js"></script>
+
+<!-- Application Javascript -->
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/service/constVariables.js"></script>
+<script type="text/javascript" src="js/service/constResource.js"></script>
+<script type="text/javascript" src="js/service/dataService.js"></script>
+<script type="text/javascript" src="js/controller/NFeatureAdoptionListCtrl.js"></script>
+<script type="text/javascript" src="js/controller/NeoNFeatureAdotpionListCtrl.js"></script>
+
+</body>
+</html>
