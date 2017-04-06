@@ -3,91 +3,41 @@
     'use strict';
 
     angular.module('ngAndroidNext99')
-        .service('buganizerF', function($q) {
+        .service('buganizerF', function($q, CONST) {
 
-            var deferred = $q.defer();;
+            var deferred;
             var isAPILoaded = false;
 
-            /**
-             * The root URL for the Issue Tracker API.
-             * This API talks to the same backend as http://buganizer
-             * This is the Buganizer production datastore.
-             */
-            var ISSUE_TRACKER_API_ROOT = 'https://issuetracker.corp.googleapis.com';
-
-            /**
-             * The root URL for the QA Issue Tracker API.
-             * This API talks to the same backend as http://buganizer-qa.
-             * Feel free to use this as a sandbox.
-             */
-            var ISSUE_TRACKER_QA_API_ROOT = 'https://test-issuetracker.corp.googleapis.com';
-
-            /**
-             * Discovery file path.
-             */
-            var DISCOVERY_PATH = '/$discovery/rest';
-
-            /**
-             * The version of the Issue Tracker API.
-             */
-            var ISSUE_TRACKER_API_VERSION = 'v1';
-
-            /**
-             * A client ID for a web application from the Google Developers Console.
-             */
-            var CLIENT_ID =
-                '679229101304-vljrfd0euv7k4lusujrfm9e55n6iuvp0.apps.googleusercontent.com';
-
-            /**
-             * The space-delimited list of scopes to authorize
-             */
-            var SCOPES = 'https://www.googleapis.com/auth/buganizer';
+            var ISSUE_TRACKER_API_ROOT = CONST.ISSUE_TRACKER_API_ROOT;
+            var ISSUE_TRACKER_QA_API_ROOT = CONST.ISSUE_TRACKER_QA_API_ROOT;
+            var DISCOVERY_PATH = CONST.DISCOVERY_PATH;
+            var ISSUE_TRACKER_API_VERSION = CONST.ISSUE_TRACKER_API_VERSION;
+            var CLIENT_ID = CONST.CLIENT_ID;
+            var SCOPES = CONST.SCOPES;
 
             /*
              * Sends an Auth call with immediate mode on, which attempts to refresh
              * the token behind the scenes, without showing any UI to the user.
-             *//*
+             */
             this.initIssueTrackerAPI = function() {
                 deferred = $q.defer();
-                gapi.auth.authorize({client_id: CLIENT_ID, scope: SCOPES, immediate: true},function(handleAuthResult) {
+                gapi.auth.authorize({client_id: CLIENT_ID, scope: SCOPES, immediate: true},function handleAuthResult(authResult) {
                     if (authResult && !authResult.error) {
                         console.log('succeeded in loading the issue tracker API');
 
-                        $scope.isAPILoaded = true;
+                        isAPILoaded = true;
                         deferred.resolve(authResult);
                     } else {
                         console.log('failed in loading the issue tracker API');
 
-                        $scope.isAPILoaded = false;
+                        isAPILoaded = false;
                         deferred.reject(authResult);
                     }
                     return deferred.promise;
                 });
-            };
-*/
-            this.initIssueTrackerAPI = function() {
-                gapi.auth.authorize({client_id: CLIENT_ID, scope: SCOPES, immediate: true},handleAuthResult);
-            };
 
-            /**
-             * Called as soon the gapi script is loaded, since the script tag we used had
-             * the name of this function on the onload parameter:
-             *  <script src="//apis.google.com/js/client.js?onload=handleClientLoad">
-             */
-            function handleAuthResult(authResult) {
-                if (authResult && !authResult.error) {
-                    console.log('succeeded in loading the issue tracker API');
-
-                    $scope.isAPILoaded = true;
-                    deferred.resolve(authResult);
-                } else {
-                    console.log('failed in loading the issue tracker API');
-
-                    $scope.isAPILoaded = false;
-                    deferred.reject(authResult);
-                }
                 return deferred.promise;
-            }
+            };
 
             this.getHotlistEntries = function(hotlistName) {
 
@@ -95,8 +45,8 @@
                 deferred = $q.defer();
 
                 // if API is not initialized, return false
-                if(!$scope.isAPILoaded) {
-                    deferred.reject('API is not initialized');
+                if(!isAPILoaded) {
+                    deferred.reject('API is not initialized - getHotlistEntries');
                     return deferred.promise;
                 }
 
@@ -107,7 +57,7 @@
                     hotlistId = CONST.AndroidOFeatureAdoption;
                 }
                 else {
-                    deferred.reject('Wrong Hotlist Name');
+                    deferred.reject('Wrong Hotlist Name - getHotlistEntries');
                     return deferred.promise;
                 }
 
@@ -123,21 +73,33 @@
                         );
                         request.execute(handleResponse);
                     });
+
+                return deferred.promise;
             };
 
             function handleResponse(response) {
                 // Something went wrong.
                 if (!response) {
-                    deferred.reject('A bad request was made');
+                    deferred.reject('A bad request was made - getHotlistEntries');
                     return deferred.promise;
                 }
 
+                if(!response['hotlistEntries']) {
+                    console.log('BugList Not Retrieved - getHotlistEntries');
+                    deferred.resolve(response);
+                }else{
+                    console.log('BugList Retrieved - getHotlistEntries');
+                    deferred.resolve(response);
+                }
+                /*
                 if (!response['issues']) {
-                    consolde.log('issues are retrieved');
+                    console.log('issues are retrieved - getHotlistEntries');
+                    deferred.resolve(response);
                     // elem('#issues').append(document.createTextNode('No issues found.'));
                 } else {
-                    consolde.log('issues are retrieved');
-                    /*
+                    console.log('issues are retrieved - getHotlistEntries');
+                    deferred.resolve(response);
+
                      response.issues.forEach(function(issue) {
                      var issueUrl = 'http://b/' + issue.issueId;
                      var anchor = document.createElement('a');
@@ -150,10 +112,9 @@
                      item.appendChild(document.createTextNode(' ' + issue.issueState.title));
                      elem('#issues').append(item);
                      });
-                     */
                 }
+                */
+                return deferred.promise;
             }
-
         });
-
 })(window.angular);
