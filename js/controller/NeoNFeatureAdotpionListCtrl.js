@@ -6,6 +6,10 @@
         .controller('ngNeoNFeatureAdoptionListCtrl', function($scope, buganizerF, RESOURCE) {
 
             $scope.appTitle = RESOURCE.APP_TITLE;
+            $scope.deviceList = [];
+            $scope.oemList = [];
+
+            var _featureCount = 0;
 
             angular.element(document).ready(function () {
 
@@ -40,9 +44,67 @@
                     console.log('No data in responsed array - _parseData');
                     return;
                 }
-                response.hotlistEntries.forEach(function(hotlistEntries) {
-                    var issue = hotlistEntries;
-                });
+
+                for(var i = 0; i < response.hotlistEntries.length; i++)  {
+                    var issues = response.hotlistEntries[i];
+
+                    var bugId = issues.issue.issueId;
+                    var title = issues.issue.issueState.title;
+                    var version = issues.issue.issueState.customFields[0].enumValue;
+                    var projectLead = issues.issue.issueState.customFields[1].textValue;
+                    var featureName = issues.issue.issueState.customFields[2].enumValue;
+                    var oem = issues.issue.issueState.customFields[3].enumValue;
+                    var region = issues.issue.issueState.customFields[4].enumValue;
+                    var marketingProductName = issues.issue.issueState.customFields[5].enumValue;
+
+                    _manipulateDeviceList(marketingProductName,version);
+                    _manipulateOemNameAndColCount(oem);
+                }
+
+                var st = 'test';
             }
+
+
+            function _manipulateDeviceList(name,launchversion) {
+                var bDeviceFound = false;
+
+                for(var j = 0; j < $scope.deviceList.length; j++) {
+                    if($scope.deviceList[j].name === name) {
+                        bDeviceFound = true;
+                        break;
+                    }
+                }
+
+                if(!bDeviceFound) {
+                    var deviceName = new Object();
+                    deviceName.name = name;
+                    deviceName.launchversion = launchversion;
+                    $scope.deviceList.push(deviceName);
+                }
+            }
+
+            function _manipulateOemNameAndColCount(name) {
+                if(_featureCount != 1)
+                    return;
+
+                var bOEMFound = false;
+
+                for (var j = 0; j < $scope.oemList.length; j++) {
+                    if ($scope.oemList[j].name === name) {
+                        $scope.oemList[j].colno += 1;
+                        bOEMFound = true;
+                        break;
+                    }
+                }
+
+                if (!bOEMFound) { // first found. Add OEM name with colno = 1;
+                    // {name:'Huawei', colno:6},
+                    var oem = new Object();
+                    oem.name = name;
+                    oem.colno = 1;
+                    $scope.oemList.push(oem);
+                }
+            }
+
         });
 })(window.angular);
