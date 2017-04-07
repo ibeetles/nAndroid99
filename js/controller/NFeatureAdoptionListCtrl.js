@@ -14,7 +14,6 @@
         $scope.featureList = [];
         $scope.buganizerdate = '';
 
-        var featureCount = 0;
         var _featureCount = 0;
         var _features = [];
 
