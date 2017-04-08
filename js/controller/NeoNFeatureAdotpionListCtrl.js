@@ -10,6 +10,8 @@
             $scope.featureList = [];
             $scope.appTitle = RESOURCE.APP_TITLE;
 
+            var bugId, title, region,marketingProductName,supportingStatus,releaseVer,oemName,featureName,projectLead,isSupportStatusFound;
+
             var _featureCount = 0;
             var _features = [];
 
@@ -47,111 +49,135 @@
                     return;
                 }
 
-                var region,marketingProductName,supportingStatus,releaseVer,oemName,featureName,projectLead,isSupportStatusFound;
-
                 for(var i = 0; i < response.hotlistEntries.length; i++)  {
-                    isSupportStatusFound = false;
-
                     var issues = response.hotlistEntries[i];
-                    var bugId = issues.issue.issueId;
-                    var title = issues.issue.issueState.title;
-
-                    for(var cnt = 0; cnt < issues.issue.issueState.customFields.length; cnt++) {
-                        switch(issues.issue.issueState.customFields[cnt].customFieldId)  {
-                            case '85051':// release version
-                                releaseVer = issues.issue.issueState.customFields[cnt].enumValue;
-                                break;
-                            case '85108': // project lead
-                                projectLead = issues.issue.issueState.customFields[cnt].textValue;
-                                break;
-                            case '85112': // feature name
-                                featureName = issues.issue.issueState.customFields[cnt].enumValue;
-                                break;
-                            case '85120': // OEM name
-                                oemName = issues.issue.issueState.customFields[cnt].enumValue;
-                                break;
-                            case '85121': // region
-                                region = issues.issue.issueState.customFields[cnt].enumValue;
-                                break;
-                            case '85125': // marketing product name
-                                marketingProductName = issues.issue.issueState.customFields[cnt].enumValue;
-                                break;
-                            case '83929': // supporting status
-                                supportingStatus = issues.issue.issueState.customFields[cnt].enumValue;
-                                isSupportStatusFound = true;
-                                break;
-                        }
-                    }
-
-                    // if there was no customFiled for supporting status, it means supporting status is not yet determined.
-                    if(!isSupportStatusFound)
-                        supportingStatus = 'TBD';
-
-                    // set devicelist and OEM/its column count
-                    _manipulateDeviceList(marketingProductName,releaseVer);
+                    _manipulateIssueDetails(issues);
+                    _manipulateDeviceList(oemName, marketingProductName,releaseVer);
                     _manipulateOemNameAndColCount(oemName);
+                    _manipulateFeatures(featureName,oemName, marketingProductName,bugId,supportingStatus);
 
-                    // make all other memory structures here.
-                    var bfeatureFound = false;
-                    for (var j = 0; j < _features.length; j++) {
-                        if(_features[j].name === featureName) { // feature already created, just add deviceAvailInfo
-                            bfeatureFound = true;
+                }
+                _manipulateOemColno();
 
-                            // add deviceAvailInfo
-                            var deviceAvailInfo = new Object();
-                            deviceAvailInfo.oemName = oemName;
-                            deviceAvailInfo.name = marketingProductName;
-                            deviceAvailInfo.bug = bugId;
-                            deviceAvailInfo.availability = supportingStatus;
+                $scope.featureList.features = _features;
+                _manipulateAllSorting();
+            }
 
-                            _features[_features.length-1].availability.push(deviceAvailInfo);
+            function _manipulateAllSorting() {
+
+                $scope.oemList.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
+                $scope.deviceList.sort(sort_by('oemName', false, function(a){return a.toUpperCase()}));
+                $scope.featureList.features.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
+                for(var cnt = 0; cnt < $scope.featureList.features.length; cnt++) {
+                    $scope.featureList.features[cnt].availability.sort(sort_by('oemName', false, function(a){return a.toUpperCase()}));
+                }
+            }
+
+            function sort_by(field, reverse,primer) {
+                var key = primer ?
+                    function(x) {return primer(x[field])} :
+                    function(x) {return x[field]};
+
+                reverse = !reverse ? 1 : -1;
+
+                return function (a, b) {
+                    return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+                }
+            }
+
+            function _manipulateOemColno() {
+                for (var j = 0; j < $scope.oemList.length; j++) {
+                    $scope.oemList[j].colno = $scope.oemList[j].colno/_featureCount;
+                }
+            }
+
+            function _manipulateIssueDetails(issues) {
+
+                bugId = issues.issue.issueId;
+                title = issues.issue.issueState.title;
+
+                isSupportStatusFound = false;
+
+                for(var cnt = 0; cnt < issues.issue.issueState.customFields.length; cnt++) {
+                    switch(issues.issue.issueState.customFields[cnt].customFieldId)  {
+                        case '83961':// release version
+                        case '85051':
+                            releaseVer = issues.issue.issueState.customFields[cnt].enumValue;
                             break;
-                        }
+                        case '83970':// project lead
+                        case '85108':
+                            projectLead = issues.issue.issueState.customFields[cnt].textValue;
+                            break;
+                        case '83966': // feature name
+                        case '85112':
+                            featureName = issues.issue.issueState.customFields[cnt].enumValue;
+                            break;
+                        case '83965': // OEM name
+                        case '85120':
+                            oemName = issues.issue.issueState.customFields[cnt].enumValue;
+                            break;
+                        case '83871': // region
+                        case '85121':
+                            region = issues.issue.issueState.customFields[cnt].enumValue;
+                            break;
+                        case '83872': // marketing product name
+                        case '85125':
+                            marketingProductName = issues.issue.issueState.customFields[cnt].enumValue;
+                            break;
+                        case '83929': // supporting status
+                        case '85113':
+                            supportingStatus = issues.issue.issueState.customFields[cnt].enumValue;
+                            isSupportStatusFound = true;
+                            break;
                     }
+                }
+                // if there was no customFiled for supporting status, it means supporting status is not yet determined.
+                if(!isSupportStatusFound)
+                    supportingStatus = 'TBD';
 
-                    if(!bfeatureFound) { // new feature name found or this is the first feature from the list
-                        var feature = new Array();
-                        feature.name = featureName;
-                        feature.availability = new Array();
-                        _features.push(feature);
+                if(supportingStatus != 'Yes' && supportingStatus != 'No')
+                    supportingStatus = 'TBD';
+            }
 
+            function _manipulateFeatures(featureName, oemName, marketingProductName,bugId,supportingStatus) {
+                // make all other memory structures here.
+                var bfeatureFound = false;
+                for (var j = 0; j < _features.length; j++) {
+                    if(_features[j].name === featureName) { // feature already created, just add deviceAvailInfo
+                        bfeatureFound = true;
+
+                        // add deviceAvailInfo
                         var deviceAvailInfo = new Object();
                         deviceAvailInfo.oemName = oemName;
                         deviceAvailInfo.name = marketingProductName;
                         deviceAvailInfo.bug = bugId;
                         deviceAvailInfo.availability = supportingStatus;
 
-                        feature.availability.push(deviceAvailInfo);
-
-                        _featureCount += 1;
-                    }
-
-                }
-                $scope.featureList.features = _features;
-            }
-
-            function _manipulateDeviceList(name,launchversion) {
-                var bDeviceFound = false;
-
-                for(var j = 0; j < $scope.deviceList.length; j++) {
-                    if($scope.deviceList[j].name === name) {
-                        bDeviceFound = true;
+                        //_features[_features.length-1].availability.push(deviceAvailInfo);
+                        _features[j].availability.push(deviceAvailInfo);
                         break;
                     }
                 }
 
-                if(!bDeviceFound) {
-                    var deviceName = new Object();
-                    deviceName.name = name;
-                    deviceName.launchversion = launchversion;
-                    $scope.deviceList.push(deviceName);
+                if(!bfeatureFound) { // new feature name found or this is the first feature from the list
+                    var feature = new Array();
+                    feature.name = featureName;
+                    feature.availability = new Array();
+                    _features.push(feature);
+
+                    var deviceAvailInfo = new Object();
+                    deviceAvailInfo.oemName = oemName;
+                    deviceAvailInfo.name = marketingProductName;
+                    deviceAvailInfo.bug = bugId;
+                    deviceAvailInfo.availability = supportingStatus;
+
+                    feature.availability.push(deviceAvailInfo);
+
+                    _featureCount += 1;
                 }
             }
 
             function _manipulateOemNameAndColCount(name) {
-                if(_featureCount != 1)
-                    return;
-
                 var bOEMFound = false;
 
                 for (var j = 0; j < $scope.oemList.length; j++) {
@@ -171,5 +197,23 @@
                 }
             }
 
+            function _manipulateDeviceList(oemName,name,launchversion) {
+                var bDeviceFound = false;
+
+                for(var j = 0; j < $scope.deviceList.length; j++) {
+                    if($scope.deviceList[j].name === name) {
+                        bDeviceFound = true;
+                        break;
+                    }
+                }
+
+                if(!bDeviceFound) {
+                    var deviceName = new Object();
+                    deviceName.name = name;
+                    deviceName.launchversion = launchversion;
+                    deviceName.oemName = oemName;
+                    $scope.deviceList.push(deviceName);
+                }
+            }
         });
 })(window.angular);
