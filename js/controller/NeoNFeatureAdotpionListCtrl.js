@@ -55,8 +55,9 @@
                     _manipulateDeviceList(oemName, marketingProductName,releaseVer);
                     _manipulateOemNameAndColCount(oemName);
                     _manipulateFeatures(featureName,oemName, marketingProductName,bugId,supportingStatus);
-
                 }
+
+                //dd
                 _manipulateOemColno();
 
                 $scope.featureList.features = _features;

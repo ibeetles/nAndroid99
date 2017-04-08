@@ -68,8 +68,7 @@
                     function() {
                         var request = gapi.client.corp_issuetracker.hotlists.entries.list (
                             {'hotlistId':'466180'},
-                            {'pageSize' : '500'},
-                            {'orderBy' : 'title,custom_field:83966,custom_field:83965,custom_field:83872'}
+                            {'pageSize' : '500'}
                         );
                         request.execute(handleResponse);
                     });
@@ -91,29 +90,6 @@
                     console.log('BugList Retrieved - getHotlistEntries');
                     deferred.resolve(response);
                 }
-                /*
-                if (!response['issues']) {
-                    console.log('issues are retrieved - getHotlistEntries');
-                    deferred.resolve(response);
-                    // elem('#issues').append(document.createTextNode('No issues found.'));
-                } else {
-                    console.log('issues are retrieved - getHotlistEntries');
-                    deferred.resolve(response);
-
-                     response.issues.forEach(function(issue) {
-                     var issueUrl = 'http://b/' + issue.issueId;
-                     var anchor = document.createElement('a');
-                     var item = document.createElement('li');
-                     anchor.href = issueUrl;
-                     anchor.target = '_blank';
-                     anchor.appendChild(document.createTextNode(issueUrl));
-
-                     item.appendChild(anchor);
-                     item.appendChild(document.createTextNode(' ' + issue.issueState.title));
-                     elem('#issues').append(item);
-                     });
-                }
-                */
                 return deferred.promise;
             }
         });
