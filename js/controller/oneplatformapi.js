@@ -3,7 +3,7 @@
     'use strict';
 
     angular.module('ngAndroidNext99')
-        .controller('ngNeoNFeatureAdoptionListCtrl', function($scope, buganizerF, RESOURCE) {
+        .controller('ngOnePlatformAPICtrl', function($scope, buganizerF, RESOURCE) {
 
             $scope.deviceList = [];
             $scope.oemList = [];
@@ -20,7 +20,7 @@
                 buganizerF.initIssueTrackerAPI2().then(
                     // success function
                     function(authResult) {
-                      console.log("succeeded in Control - ngNeoNFeatureAdoptionListCtrl");
+                        console.log("succeeded in Control - ngNeoNFeatureAdoptionListCtrl");
                         // call function to retrieve bugs by hotlist
                         buganizerF.getHotlistEntries('AndroidNFeatureAdoption').then(
                             //success function
@@ -180,44 +180,44 @@
 
 
             /*
-            function _manipulateFeatures(featureName, oemName, marketingProductName,bugId,supportingStatus) {
-                // make all other memory structures here.
-                var bfeatureFound = false;
-                for (var j = 0; j < _features.length; j++) {
-                    if(_features[j].name === featureName) { // feature already created, just add deviceAvailInfo
-                        bfeatureFound = true;
+             function _manipulateFeatures(featureName, oemName, marketingProductName,bugId,supportingStatus) {
+             // make all other memory structures here.
+             var bfeatureFound = false;
+             for (var j = 0; j < _features.length; j++) {
+             if(_features[j].name === featureName) { // feature already created, just add deviceAvailInfo
+             bfeatureFound = true;
 
-                        // add deviceAvailInfo
-                        var deviceAvailInfo = new Object();
-                        deviceAvailInfo.oemName = oemName;
-                        deviceAvailInfo.name = marketingProductName;
-                        deviceAvailInfo.bug = bugId;
-                        deviceAvailInfo.availability = supportingStatus;
+             // add deviceAvailInfo
+             var deviceAvailInfo = new Object();
+             deviceAvailInfo.oemName = oemName;
+             deviceAvailInfo.name = marketingProductName;
+             deviceAvailInfo.bug = bugId;
+             deviceAvailInfo.availability = supportingStatus;
 
-                        //_features[_features.length-1].availability.push(deviceAvailInfo);
-                        _features[j].availability.push(deviceAvailInfo);
-                        break;
-                    }
-                }
+             //_features[_features.length-1].availability.push(deviceAvailInfo);
+             _features[j].availability.push(deviceAvailInfo);
+             break;
+             }
+             }
 
-                if(!bfeatureFound) { // new feature name found or this is the first feature from the list
-                    var feature = new Array();
-                    feature.name = featureName;
-                    feature.availability = new Array();
-                    _features.push(feature);
+             if(!bfeatureFound) { // new feature name found or this is the first feature from the list
+             var feature = new Array();
+             feature.name = featureName;
+             feature.availability = new Array();
+             _features.push(feature);
 
-                    var deviceAvailInfo = new Object();
-                    deviceAvailInfo.oemName = oemName;
-                    deviceAvailInfo.name = marketingProductName;
-                    deviceAvailInfo.bug = bugId;
-                    deviceAvailInfo.availability = supportingStatus;
+             var deviceAvailInfo = new Object();
+             deviceAvailInfo.oemName = oemName;
+             deviceAvailInfo.name = marketingProductName;
+             deviceAvailInfo.bug = bugId;
+             deviceAvailInfo.availability = supportingStatus;
 
-                    feature.availability.push(deviceAvailInfo);
+             feature.availability.push(deviceAvailInfo);
 
-                    _featureCount += 1;
-                }
-            }
-            */
+             _featureCount += 1;
+             }
+             }
+             */
 
             function _manipulateOemNameAndColCount(name) {
                 var bOEMFound = false;
