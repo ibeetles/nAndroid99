@@ -10,6 +10,7 @@
             $scope.featureList = [];
             $scope.appTitle = RESOURCE.APP_TITLE;
 
+
             var bugId, title, region,marketingProductName,supportingStatus,releaseVer,oemName,featureName,projectLead,isSupportStatusFound;
 
             var _featureCount = 0;
@@ -61,17 +62,68 @@
                 _manipulateOemColno();
 
                 $scope.featureList.features = _features;
+
+                // additional portion of codes
+                _manipulateAddingDeviceListToOemList();
+                _manipulateAddingFeatureToDeviceList();
+
                 _manipulateAllSorting();
+
+                // final approach
+            }
+
+            function _remanipulateDeviceList() {
+
             }
 
             function _manipulateAllSorting() {
-
                 $scope.oemList.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
-                $scope.deviceList.sort(sort_by('oemName', false, function(a){return a.toUpperCase()}));
-                $scope.featureList.features.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
-                for(var cnt = 0; cnt < $scope.featureList.features.length; cnt++) {
-                    $scope.featureList.features[cnt].availability.sort(sort_by('oemName', false, function(a){return a.toUpperCase()}));
+                for(var cnt = 0; cnt < $scope.oemList.length; cnt++) {
+                    var oem = $scope.oemList[cnt];
+                    oem.deviceList.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
+                    for(var cntDevice = 0; cntDevice < oem.deviceList.length; cntDevice++) {
+                        var device = oem.deviceList[cntDevice];
+                        device.featureList.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
+                    }
                 }
+            }
+
+            function _manipulateAddingFeatureToDeviceList() {
+                for(var oemCnt = 0; oemCnt < $scope.oemList.length; oemCnt++) {
+                    var oem = $scope.oemList[oemCnt];
+                    for(var deviceCnt = 0; deviceCnt < oem.deviceList.length; deviceCnt++) {
+                        var device = oem.deviceList[deviceCnt];
+                        device.featureList = [];
+                        for(var featureCnt = 0; featureCnt < $scope.featureList.features.length; featureCnt++) {
+                            var feature = $scope.featureList.features[featureCnt];
+                            for(var availCnt = 0; availCnt < feature.availability.length; availCnt++) {
+                                var availability = feature.availability[availCnt];
+                                if(availability.oemName === oem.name && availability.name === device.name) {
+
+                                    var featrueAndAvailability = new Object();
+                                    featrueAndAvailability.name = feature.name;
+                                    featrueAndAvailability.bug = availability.bug;
+                                    featrueAndAvailability.deviceName = availability.name;
+                                    featrueAndAvailability.oemName = availability.oemName;
+
+                                    device.featureList.push(featrueAndAvailability);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            function _manipulateAddingDeviceListToOemList() {
+             for(var cnt = 0; cnt < $scope.oemList.length; cnt++) {
+                 var oem = $scope.oemList[cnt];
+                 oem.deviceList = [];
+                 for(var i = 0; i < $scope.deviceList.length; i++) {
+                     if($scope.deviceList[i].oemName === oem.name) {
+                         oem.deviceList.push($scope.deviceList[i]);
+                     }
+                 }
+             }
             }
 
             function sort_by(field, reverse,primer) {
@@ -177,47 +229,6 @@
                     _featureCount += 1;
                 }
             }
-
-
-            /*
-             function _manipulateFeatures(featureName, oemName, marketingProductName,bugId,supportingStatus) {
-             // make all other memory structures here.
-             var bfeatureFound = false;
-             for (var j = 0; j < _features.length; j++) {
-             if(_features[j].name === featureName) { // feature already created, just add deviceAvailInfo
-             bfeatureFound = true;
-
-             // add deviceAvailInfo
-             var deviceAvailInfo = new Object();
-             deviceAvailInfo.oemName = oemName;
-             deviceAvailInfo.name = marketingProductName;
-             deviceAvailInfo.bug = bugId;
-             deviceAvailInfo.availability = supportingStatus;
-
-             //_features[_features.length-1].availability.push(deviceAvailInfo);
-             _features[j].availability.push(deviceAvailInfo);
-             break;
-             }
-             }
-
-             if(!bfeatureFound) { // new feature name found or this is the first feature from the list
-             var feature = new Array();
-             feature.name = featureName;
-             feature.availability = new Array();
-             _features.push(feature);
-
-             var deviceAvailInfo = new Object();
-             deviceAvailInfo.oemName = oemName;
-             deviceAvailInfo.name = marketingProductName;
-             deviceAvailInfo.bug = bugId;
-             deviceAvailInfo.availability = supportingStatus;
-
-             feature.availability.push(deviceAvailInfo);
-
-             _featureCount += 1;
-             }
-             }
-             */
 
             function _manipulateOemNameAndColCount(name) {
                 var bOEMFound = false;
