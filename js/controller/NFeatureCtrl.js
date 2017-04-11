@@ -20,7 +20,7 @@
                 buganizerF.initIssueTrackerAPI().then(
                     // success function
                     function(authResult) {
-                        console.log("succeeded in Control - ngNeoNFeatureAdoptionListCtrl");
+                        console.log("succeeded in Control - ngNfeatureCtrl");
                         // call function to retrieve bugs by hotlist
                         buganizerF.getHotlistEntries('AndroidNFeatureAdoption').then(
                             //success function
@@ -36,7 +36,7 @@
                     },
                     //error function
                     function(authResult) {
-                        console.log("failed in Control - ngNeoNFeatureAdoptionListCtrl");
+                        console.log("failed in Control - ngNfeatureCtrl");
                     }
                 );
             });
