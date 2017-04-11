@@ -10,7 +10,6 @@
             $scope.featureList = [];
             $scope.appTitle = RESOURCE.APP_TITLE;
 
-
             var bugId, title, region,marketingProductName,supportingStatus,releaseVer,oemName,featureName,projectLead,isSupportStatusFound;
 
             var _featureCount = 0;
