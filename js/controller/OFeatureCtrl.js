@@ -3,7 +3,7 @@
     'use strict';
 
     angular.module('ngAndroidNext99')
-        .controller('ngOnePlatformAPICtrl', function($scope, buganizerF, RESOURCE) {
+        .controller('ngOfeatureCtrl', function($scope, buganizerF, RESOURCE) {
 
             $scope.deviceList = [];
             $scope.oemList = [];
@@ -17,7 +17,7 @@
 
             angular.element(document).ready(function () {
 
-                buganizerF.initIssueTrackerAPI2().then(
+                buganizerF.initIssueTrackerAPI().then(
                     // success function
                     function(authResult) {
                         console.log("succeeded in Control - ngNeoNFeatureAdoptionListCtrl");

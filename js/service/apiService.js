@@ -21,31 +21,11 @@
              */
             this.initIssueTrackerAPI = function() {
                 deferred = $q.defer();
-                gapi.auth.authorize({client_id: CLIENT_ID, scope: SCOPES, immediate: true},function handleAuthResult(authResult) {
-                    if (authResult && !authResult.error) {
-                        console.log('succeeded in loading the issue tracker API');
-
-                        isAPILoaded = true;
-                        deferred.resolve(authResult);
-                    } else {
-                        console.log('failed in loading the issue tracker API');
-
-                        isAPILoaded = false;
-                        deferred.reject(authResult);
-                    }
-                    return deferred.promise;
-                });
-
-                return deferred.promise;
-            };
-
-            this.initIssueTrackerAPI2 = function() {
-                deferred = $q.defer();
-                gapi.load('client', init2);
+                gapi.load('client', init);
                 return deferred.promise;
             }
 
-            function init2() {
+            function init() {
                 gapi.auth.authorize({client_id: CLIENT_ID, scope: SCOPES, immediate: true},function handleAuthResult(authResult) {
                     if (authResult && !authResult.error) {
                         console.log('succeeded in loading the issue tracker API');
