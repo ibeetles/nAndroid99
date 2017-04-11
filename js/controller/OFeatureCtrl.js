@@ -22,7 +22,7 @@
                     function(authResult) {
                         console.log("succeeded in Control - ngNeoNFeatureAdoptionListCtrl");
                         // call function to retrieve bugs by hotlist
-                        buganizerF.getHotlistEntries('AndroidNFeatureAdoption').then(
+                        buganizerF.getHotlistEntries('AndroidOFeatureAdoption').then(
                             //success function
                             function(response) {
                                 // check if response has list of bugs
