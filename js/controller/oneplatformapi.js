@@ -70,10 +70,71 @@
                 _manipulateAllSorting();
 
                 // final approach
+                _remanipulateDeviceList();
+                console.log('Done');
             }
 
             function _remanipulateDeviceList() {
+                // clear all memeory
+                $scope.deviceList = [];
 
+                for (var cnt = 0; cnt < $scope.oemList.length; cnt++) {
+                    var oem = $scope.oemList[cnt];
+                    for(var deviceCnt = 0; deviceCnt < oem.deviceList.length; deviceCnt++) {
+                        $scope.deviceList.push(oem.deviceList[deviceCnt]);
+                    }
+                }
+
+                //clear up all the memory here
+                $scope.featureList = [];
+                $scope.featureList.features = [];
+
+                for(var cnt = 0; cnt < $scope.oemList.length; cnt++) {
+                    var oem = $scope.oemList[cnt];
+                    for(var deviceCnt = 0; deviceCnt < oem.deviceList.length; deviceCnt++) {
+                        var device = oem.deviceList[deviceCnt];
+                        for(var featureCnt = 0; featureCnt < device.featureList.length; featureCnt++) {
+                            var feature = device.featureList[featureCnt];
+
+                            // add availability if there is feature
+
+                            var isFeatureFound = false;
+                            for(var isFeatureFoundCnt = 0 ; isFeatureFoundCnt < $scope.featureList.features.length; isFeatureFoundCnt++) {
+                                var orgFeature = $scope.featureList.features[isFeatureFoundCnt];
+                                if(orgFeature.name === feature.name) {
+                                    // add deviceAvailInfo
+                                    var deviceAvailInfo = new Object();
+                                    deviceAvailInfo.oemName = oem.name;
+                                    deviceAvailInfo.name = device.name;
+                                    deviceAvailInfo.bug = feature.bug;
+                                    deviceAvailInfo.availability = feature.suppotStatus;
+
+                                    $scope.featureList.features[isFeatureFoundCnt].availability.push(deviceAvailInfo);
+
+                                    isFeatureFound = true;
+
+                                    break;
+                                }
+                            }
+
+                            if(!isFeatureFound) {
+                                // create feature if there is no such feature
+                                var finalFeature = new Array();
+                                finalFeature.name = feature.name;
+                                finalFeature.availability = new Array();
+                                $scope.featureList.features.push(finalFeature);
+
+                                var finalDeviceAvailInfo = new Object();
+                                finalDeviceAvailInfo.oemName = oem.name;
+                                finalDeviceAvailInfo.name = device.name;
+                                finalDeviceAvailInfo.bug = feature.bug;
+                                finalDeviceAvailInfo.availability = feature.suppotStatus;
+
+                                finalFeature.availability.push(finalDeviceAvailInfo);
+                            }
+                        }
+                    }
+                }
             }
 
             function _manipulateAllSorting() {
@@ -99,12 +160,12 @@
                             for(var availCnt = 0; availCnt < feature.availability.length; availCnt++) {
                                 var availability = feature.availability[availCnt];
                                 if(availability.oemName === oem.name && availability.name === device.name) {
-
                                     var featrueAndAvailability = new Object();
                                     featrueAndAvailability.name = feature.name;
                                     featrueAndAvailability.bug = availability.bug;
                                     featrueAndAvailability.deviceName = availability.name;
                                     featrueAndAvailability.oemName = availability.oemName;
+                                    featrueAndAvailability.suppotStatus = availability.availability;
 
                                     device.featureList.push(featrueAndAvailability);
                                 }
