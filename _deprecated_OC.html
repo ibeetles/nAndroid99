@@ -42,8 +42,8 @@
         <div class="tabbable" style="margin-bottom: 18px;">
             <div style="float:left; width:80%;">
                 <ul class="nav nav-tabs" ng-cloak>
-                    <li class=""><a href="index.html">N/N MR1</a></li>
-                    <li class="active"><a href="OC.html">O</a></li>
+                    <li class="nav-link"><a href="_deprecated_index.html">N/N MR1</a></li>
+                    <li class="active"><a href="#">O</a></li>
                 </ul>
             </div>
             <div class = "tbllegend">
@@ -86,7 +86,10 @@
                             </span>
                                     <span ng-if="availability.availability == 'TBD'">
                                <span class="glyphicon glyphicon-option-horizontal text-muted" data-toggle="tooltip" data-placement="right" title="b/{{availability.bug}}"></span>
-                        </span>
+                            </span>
+                            <span ng-if="availability.availability == 'Unknown'">
+                               <span class="glyphicon glyphicon-asterisk text-muted" data-toggle="tooltip" data-placement="right" title="No bug filed and status unknown"></span>
+                            </span>
                                 </a>
                             </td>
                         </tr>

@@ -86,7 +86,11 @@
                             </span>
                             <span ng-if="availability.availability == 'TBD'">
                                <span class="glyphicon glyphicon-option-horizontal text-muted" data-toggle="tooltip" data-placement="right" title="b/{{availability.bug}}"></span>
-                               </span>
+                            </span>
+                            <span ng-if="availability.availability == 'Unknown'">
+                               <span class="glyphicon glyphicon-asterisk text-muted" data-toggle="tooltip" data-placement="right" title="No bug filed and status unknown"></span>
+                            </span>
+
                         </a>
                     </td>
                 </tr>
