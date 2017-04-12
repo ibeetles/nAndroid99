@@ -57,7 +57,7 @@
                 if(hotlistName === 'AndroidNFeatureAdoption') {
                     hotlistId = CONST.AndroidNFeatureAdoption;
                 }
-                else if(hostlistName === 'AndroidOFeatureAdoption') {
+                else if(hotlistName === 'AndroidOFeatureAdoption') {
                     hotlistId = CONST.AndroidOFeatureAdoption;
                 }
                 else {
@@ -71,7 +71,8 @@
                     ISSUE_TRACKER_API_VERSION,
                     function() {
                         var request = gapi.client.corp_issuetracker.hotlists.entries.list (
-                            {'hotlistId':'466180'},
+                            //{'hotlistId':'466180'},
+                            {'hotlistId':hotlistId},
                             {'pageSize' : '500'}
                         );
                         request.execute(handleResponse);

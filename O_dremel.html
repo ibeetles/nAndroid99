@@ -13,12 +13,11 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Droid+Sans">
         <link href="css/main.css" rel="stylesheet">
-        <!-- This is for adding new statement for enabling API -->
     </head>
 
-    <body ng-controller="ngNFeatureAdoptionListCtrl" ng-init="init()">
+    <body ng-controller="ngOFeatureAdoptionListCtrl" ng-init="init()">
         <div style="margin-bottom: 80px;">
-            <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar-scroll" >
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar-scroll">
                 <div class="container">
                     <div class="navbar-header">
                         <a class="navbar-brand" align="left" >
@@ -26,9 +25,9 @@
                         </a>
                     </div>
                     <div  style="float: left; width: 80%;">
-                        <a href="https://mincheoulkim.users.x20web.corp.google.com/www/nAndroid99/index.html" style="text-decoration: none;"><h3 align="center" style="font-weight: bold; color: black;">Android Feature Adoption <i style="font-family: 'Comic Sans MS';color: blue">Beta</i> (go/ape-fas)</h3></a>
+                        <a href="https://mincheoulkim.users.x20web.corp.google.com/www/nAndroid99/index.html" style="text-decoration: none;"><h3 align="center" style="font-weight: bold;color: black;">Android Feature Adoption <i style="font-family: 'Comic Sans MS';color: blue">Beta</i> (go/ape-fas)</h3></a>
                     </div>
-               </div>
+                </div>
             </nav>
         </div>
 
@@ -40,12 +39,11 @@
             <p><i>If nothing shows, please open new tab and navigate to <span class='text-danger'>'plx/'</span> to get credential.</i></p>
         </div>
 
-
         <div class="tabbable" style="margin-bottom: 18px;">
             <div style="float:left; width:80%;">
                 <ul class="nav nav-tabs" ng-cloak>
-                    <li class="active"><a href="#">N/N MR1</a></li>
-                    <li class="nav-link disabled"><a href="">O</a></li>
+                    <li class="nav-link"><a href="index_dremel.html">N/N MR1</a></li>
+                    <li class="active"><a href="#">O</a></li>
                 </ul>
             </div>
             <div class = "tbllegend">
@@ -64,7 +62,8 @@
                         </tr>
 
                         <tr >
-                            <th scope="col" ng-repeat="device in deviceList" class="text-center" style="vertical-align: middle; line-height: 120%; font-weight: normal;">
+                            <th scope="col" ng-repeat="device in deviceList" class="text-center"
+                                style="vertical-align: middle; line-height: 120%; font-weight: normal;">
                                 {{device.name}}
                             </th>
                         </tr>
@@ -82,12 +81,15 @@
                                 <span ng-if="availability.availability == 'Yes'">
                                 <span class="glyphicon glyphicon-ok text-success" data-toggle="tooltip" data-placement="right" title="b/{{availability.bug}}" ></span>
                             </span>
-                                <span ng-if="availability.availability == 'No'">
+                                    <span ng-if="availability.availability == 'No'">
                                 <span class="glyphicon glyphicon-remove text-warning" data-toggle="tooltip" data-placement="right" title="b/{{availability.bug}}"></span>
                             </span>
-                               <span ng-if="availability.availability == 'TBD'">
+                                    <span ng-if="availability.availability == 'TBD'">
                                <span class="glyphicon glyphicon-option-horizontal text-muted" data-toggle="tooltip" data-placement="right" title="b/{{availability.bug}}"></span>
-                               </span>
+                            </span>
+                            <span ng-if="availability.availability == 'Unknown'">
+                               <span class="glyphicon glyphicon-asterisk text-muted" data-toggle="tooltip" data-placement="right" title="No bug filed and status unknown"></span>
+                            </span>
                                 </a>
                             </td>
                         </tr>
@@ -95,6 +97,7 @@
                 </div>
             </div>
         </div>​
+
 
         <!-- It is from Google Hosted Libraries https://developers.google.com/speed/libraries/ -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -111,6 +114,6 @@
         <script type="text/javascript" src="js/service/constVariables.js"></script>
         <script type="text/javascript" src="js/service/constResource.js"></script>
         <script type="text/javascript" src="js/service/dataService.js"></script>
-        <script type="text/javascript" src="js/controller/_deprecated_NFeatureAdoptionListCtrl.js"></script>
+        <script type="text/javascript" src="js/controller/OFeatureDremelCtrl.js"></script>
     </body>
 </html>
