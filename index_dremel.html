@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html ng-app ='ngAndroidNext99' ng-cloak>
     <head>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-TQ4QXNT');</script>
+        <!-- End Google Tag Manager -->
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,6 +25,11 @@
     </head>
 
     <body ng-controller="ngNFeatureAdoptionListCtrl" ng-init="init()">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQ4QXNT"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
         <div style="margin-bottom: 80px;">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar-scroll" >
                 <div class="container">
@@ -35,7 +48,7 @@
         <div style="font-family: 'Droid Sans'; margin-bottom: 30px;">
             <h4 style="font-weight: bold">Feature Adoption Status</h4>
             <h5>
-                Partner & Device data come from 'Flagship and Fast Follower Schedule - N & O 2017' (<a href='https://docs.google.com/spreadsheets/d/1uhWdheS5pGyHDjSL36FlnR__nYmgix6mucMvMgtkvpE/edit#gid=327487772' target='_blank'>go/ape-flagships</a>), and feature adoption information is based on OEM TAM response. Please note that current status information is a snapshot of adoption information as of <span class='text-danger'> {{buganizerdate}}</span>
+                Partner & Device data come from 'Flagship and Fast Follower Schedule - N & O 2017', and feature adoption information is based on OEM TAM response. Please note that current status information is a snapshot of adoption information as of <span class='text-danger'> {{buganizerdate}}</span>
             </h5>
             <p><i>If nothing shows, please open new tab and navigate to <span class='text-danger'>'plx/'</span> to get credential.</i></p>
         </div>
@@ -45,7 +58,7 @@
             <div style="float:left; width:80%;">
                 <ul class="nav nav-tabs" ng-cloak>
                     <li class="active"><a href="#">N/N MR1</a></li>
-                    <li class="nav-link"><a href="O_dremel.html">O</a></li>
+                    <li class="nav-link disabled"><a href="">O</a></li>
                 </ul>
             </div>
             <div class = "tbllegend">
