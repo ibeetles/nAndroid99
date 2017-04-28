@@ -26,10 +26,10 @@
             }
 
             function init() {
+
                 gapi.auth.authorize({client_id: CLIENT_ID, scope: SCOPES, immediate: true},function handleAuthResult(authResult) {
                     if (authResult && !authResult.error) {
                         console.log('succeeded in loading the issue tracker API');
-
                         isAPILoaded = true;
                         deferred.resolve(authResult);
                     } else {
