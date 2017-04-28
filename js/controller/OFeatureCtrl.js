@@ -201,30 +201,37 @@
                     switch(issue.issue.issueState.customFields[cnt].customFieldId)  {
                         case '83961':// release version
                         case '85051':
+                        case '87023':
                             releaseVer = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
                         case '83970':// project lead
                         case '85108':
+                        case '86958':
                             projectLead = issue.issue.issueState.customFields[cnt].textValue;
                             break;
                         case '83966': // feature name
                         case '85112':
+                        case '86964':
                             featureName = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
                         case '83965': // OEM name
                         case '85120':
+                        case '87022':
                             oemName = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
                         case '83871': // region
                         case '85121':
+                        case '86979':
                             region = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
                         case '83872': // marketing product name
                         case '85125':
+                        case '87060':
                             marketingProductName = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
                         case '83929': // supporting status
                         case '85113':
+                        case '87061':
                             supportingStatus = issue.issue.issueState.customFields[cnt].enumValue;
                             isSupportStatusFound = true;
                             break;
