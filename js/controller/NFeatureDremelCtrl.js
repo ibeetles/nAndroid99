@@ -24,6 +24,9 @@
         }
 
         angular.element(document).ready(function () {
+            var currentdate = new Date();
+            console.log('angular.element.ready - ngNFeatureAdoptionListCtrl - ' + currentdate.getMilliseconds());
+
             dremelF.executeSQL('NFeature').then(
                 // success function
                 function(jsonData) {

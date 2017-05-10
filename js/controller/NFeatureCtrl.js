@@ -16,6 +16,9 @@
 
             angular.element(document).ready(function () {
 
+                var currentdate = new Date();
+                console.log('angular.element.ready - ngNfeatureCtrl - ' + currentdate.getMilliseconds());
+
                 buganizerF.initIssueTrackerAPI().then(
                     // success function
                     function(authResult) {
