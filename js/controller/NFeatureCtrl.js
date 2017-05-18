@@ -204,39 +204,39 @@
 
                 for(var cnt = 0; cnt < issue.issue.issueState.customFields.length; cnt++) {
                     switch(issue.issue.issueState.customFields[cnt].customFieldId)  {
-                        case '83961':// release version
-                        case '85051':
-                        case '87023':
+                        //case '83961': // release version
+                        case '85051': // Samsung
+                        case '87023': // Next99 > Feature Adoption
                             releaseVer = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
-                        case '83970':// project lead
-                        case '85108':
-                        case '86958':
+                        //case '83970': // project lead
+                        case '85108': // Samsung
+                        case '86958': // Next99 > Feature Adoption
                             projectLead = issue.issue.issueState.customFields[cnt].textValue;
                             break;
-                        case '83966': // feature name
-                        case '85112':
-                        case '86964':
+                        //case '83966': // feature name
+                        case '85112': // Samsung
+                        case '86964': // Next99 > Feature Adoption
                             featureName = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
-                        case '83965': // OEM name
-                        case '85120':
-                        case '87022':
+                        //case '83965': // OEM name
+                        case '85120': // Samsung
+                        case '87022': // Next99 > Feature Adoption
                             oemName = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
-                        case '83871': // region
-                        case '85121':
-                        case '86979':
+                        //case '83871': // region
+                        case '85121': // Samsung
+                        case '86979': // Next99 > Feature Adoption
                             region = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
-                        case '83872': // marketing product name
-                        case '85125':
-                        case '87060':
+                        //case '83872': // marketing product name
+                        case '85125': // Samsung
+                        case '87060': // Next99 > Feature Adoption
                             marketingProductName = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
-                        case '83929': // supporting status
-                        case '85113':
-                        case '87061':
+                        //case '83929': // supporting status
+                        case '85113': // Samsung
+                        case '87061': // Next99 > Feature Adoption
                             supportingStatus = issue.issue.issueState.customFields[cnt].enumValue;
                             isSupportStatusFound = true;
                             break;

@@ -199,46 +199,53 @@
 
                 for(var cnt = 0; cnt < issue.issue.issueState.customFields.length; cnt++) {
                     switch(issue.issue.issueState.customFields[cnt].customFieldId)  {
-                        case '83961':// launch version
-                        case '85051':
-                        case '87023':
-                        case '87079':
+                        //case '83961': // launch version
+                        case '85051': // Samsung
+                        case '87023': // Next99 > Feature Adoption
+                        case '87079': // Moto
+                        case '88362': // LG
                             releaseVer = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
-                        case '83970':// project lead
-                        case '85108':
-                        case '86958':
-                        case '87095':
+                        //case '83970': // project lead
+                        case '85108': // Samsung
+                        case '86958': // Next99 > Feature Adoption
+                        case '87095': // Moto
+                        case '88376': // LG
                             projectLead = issue.issue.issueState.customFields[cnt].textValue;
                             break;
-                        case '83966': // feature name
-                        case '85112':
-                        case '86964':
-                        case '87084':
+                        //case '83966': // feature name
+                        case '85112': // Samsung
+                        case '86964': // Next99 > Feature Adoption
+                        case '87084': // Moto
+                        case '88371': // LG
                             featureName = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
-                        case '83965': // OEM name
-                        case '85120':
-                        case '87022':
-                        case '87074':
+                        //case '83965': // OEM name
+                        case '85120': // Samsung
+                        case '87022': // Next99 > Feature Adoption
+                        case '87074': // Moto
+                        case '88367': // LG
                             oemName = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
-                        case '83871': // region
-                        case '85121':
-                        case '86979':
-                        case '87083':
+                        //case '83871': // region
+                        case '85121': // Samsung
+                        case '86979': // Next99 > Feature Adoption
+                        case '87083': // Moto
+                        case '88430': // LG
                             region = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
-                        case '83872': // marketing product name
-                        case '85125':
-                        case '87060':
-                        case '87078':
+                        //case '83872': // marketing product name
+                        case '85125': // Samsung
+                        case '87060': // Next99 > Feature Adoption
+                        case '87078': // Moto
+                        case '88426': // LG
                             marketingProductName = issue.issue.issueState.customFields[cnt].enumValue;
                             break;
-                        case '83929': // supporting status
-                        case '85113':
-                        case '87061':
-                        case '87096':
+                        //case '83929': // supporting status
+                        case '85113': // Samsung
+                        case '87061': // Next99 > Feature Adoption
+                        case '87096': // Moto
+                        case '88368': // LG
                             supportingStatus = issue.issue.issueState.customFields[cnt].enumValue;
                             isSupportStatusFound = true;
                             break;
