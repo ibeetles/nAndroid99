@@ -70,6 +70,7 @@
                     ISSUE_TRACKER_API_ROOT + DISCOVERY_PATH,
                     ISSUE_TRACKER_API_VERSION,
                     function() {
+
                         var request = gapi.client.corp_issuetracker.hotlists.entries.list (
                             //{'hotlistId':'466180'},
                             {'hotlistId':hotlistId},

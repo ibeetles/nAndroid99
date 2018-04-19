@@ -21,17 +21,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Droid+Sans">
     <link href="css/main.css" rel="stylesheet">
-    <!-- This is for adding new statement for enabling API -->
 </head>
 
-<body ng-controller="ngNFeatureAdoptionListCtrl" ng-init="init()">
+<body ng-controller="ngOFeatureAdoptionListCtrl" ng-init="init()">
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQ4QXNT"
                   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 <div style="margin-bottom: 80px;">
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar-scroll" >
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar-scroll">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" align="left" >
@@ -39,7 +38,7 @@
                 </a>
             </div>
             <div  style="float: left; width: 80%;">
-                <a href="https://mincheoulkim.users.x20web.corp.google.com/www/nAndroid99/index_dremel.html" style="text-decoration: none;"><h3 align="center" style="font-weight: bold; color: black;">Android Feature Adoption <i style="font-family: 'Comic Sans MS';color: blue">Beta</i> (go/ape-fas)</h3></a>
+                <a href="https://mincheoulkim.users.x20web.corp.google.com/www/nAndroid99/index_dremel.html" style="text-decoration: none;"><h3 align="center" style="font-weight: bold;color: black;">Android Feature Adoption <i style="font-family: 'Comic Sans MS';color: blue">Beta</i> (go/ape-fas)</h3></a>
             </div>
         </div>
     </nav>
@@ -54,13 +53,12 @@
     <p><i>If nothing shows, please open new tab and navigate to <span class='text-danger'>'plx/'</span> to get credential.</i></p>
 </div>
 
-
 <div class="tabbable" style="margin-bottom: 18px;">
     <div style="float:left; width:80%;">
         <ul class="nav nav-tabs" ng-cloak>
-            <li class="active"><a href="#">N/N MR1</a></li>
+            <li class="nav-link"><a href="index_dremel.html">N/N MR1</a></li>
             <li class="nav-link"><a href="O_dremel.html">O</a></li>
-            <li class="nav-link"><a href="P_dremel.html">P</a></li>
+            <li class="active"><a href="#">P</a></li>
         </ul>
     </div>
     <div class = "tbllegend">
@@ -79,7 +77,8 @@
                 </tr>
 
                 <tr >
-                    <th scope="col" ng-repeat="device in deviceList" class="text-center" style="vertical-align: middle; line-height: 120%; font-weight: normal;">
+                    <th scope="col" ng-repeat="device in deviceList" class="text-center"
+                        style="vertical-align: middle; line-height: 120%; font-weight: normal;">
                         {{device.name}}
                     </th>
                 </tr>
@@ -106,7 +105,6 @@
                             <span ng-if="availability.availability == 'Unknown'">
                                <span class="glyphicon glyphicon-asterisk text-muted" data-toggle="tooltip" data-placement="right" title="No bug filed and status unknown"></span>
                             </span>
-
                         </a>
                     </td>
                 </tr>
@@ -115,6 +113,7 @@
     </div>
 </div>​
 
+
 <!-- It is from Google Hosted Libraries https://developers.google.com/speed/libraries/ -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -122,9 +121,9 @@
 <script src="bower_components/angular-smart-table/dist/smart-table.js"></script> <!--smart table  -->
 
 <!--Aplos --><!--
-        <script src="https://data.corp.google.com/aplos/versions/aplos-v1_2.js"></script>
-        <script src='https://login.corp.google.com/javascript_api.js'></script>
-        -->
+            <script src="https://data.corp.google.com/aplos/versions/aplos-v1_2.js"></script>
+            <script src='https://login.corp.google.com/javascript_api.js'></script>
+            -->
 
 <!--Aplos -->
 <!--upgraded from aplos-v1_2.js to aplos-v1_2.js. Refer to https://g3doc.corp.google.com/company/teams/aplos/js/d3upgrade.md?cl=head -->
@@ -136,6 +135,6 @@
 <script type="text/javascript" src="js/service/constVariables.js"></script>
 <script type="text/javascript" src="js/service/constResource.js"></script>
 <script type="text/javascript" src="js/service/dataService.js"></script>
-<script type="text/javascript" src="js/controller/NFeatureDremelCtrl.js"></script>
+<script type="text/javascript" src="js/controller/OFeatureDremelCtrl.js"></script>
 </body>
 </html>
