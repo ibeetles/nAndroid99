@@ -59,6 +59,8 @@
                 }
                 else if(hotlistName === 'AndroidOFeatureAdoption') {
                     hotlistId = CONST.AndroidOFeatureAdoption;
+                } else if(hotlistName === 'AndroidPFeatureAdoption'){
+                    hotlistId = CONST.AndroidPFeatureAdoption;
                 }
                 else {
                     deferred.reject('Wrong Hotlist Name - getHotlistEntries');
