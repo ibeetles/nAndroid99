@@ -6,6 +6,7 @@
         .constant('CONST', {
             'AndroidNFeatureAdoption'   : '466180',
             'AndroidOFeatureAdoption'   : '469088',
+            'AndroidPFeatureAdoption'   : '932968',
             'ISSUE_TRACKER_API_ROOT'    : 'https://issuetracker.corp.googleapis.com',
             'ISSUE_TRACKER_QA_API_ROOT' : 'https://test-issuetracker.corp.googleapis.com',
             'DISCOVERY_PATH'            : '/$discovery/rest',
