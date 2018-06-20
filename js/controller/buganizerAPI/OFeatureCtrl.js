@@ -3,7 +3,7 @@
     'use strict';
 
     angular.module('ngAndroidNext99')
-        .controller('ngPfeatureCtrl', function($scope, buganizerF) {
+        .controller('ngOfeatureCtrl', function($scope, buganizerF) {
 
             $scope.deviceList = [];
             $scope.oemList = [];
@@ -14,6 +14,46 @@
             var _featureCount = 0;
             var _features = [];
 
+            $scope.userSignIn = function() {
+              var GoogleAuth = gapi.auth2.getAuthInstance();
+              GoogleAuth.disconnect();
+              console.log('ACK_LOGOUT');
+              window.location.reload(true);
+            };
+
+            angular.element(document).ready(function () {
+
+              buganizerF.initIssueTrackerAPI().then(
+                  // success function
+                  function(authResult) {
+                    console.log("ACK_API_INITIALIZING(Issue Tracker API)");
+                    // call function to retrieve bugs by hotlist
+                    buganizerF.getHotlistEntries('AndroidOFeatureAdoption').then(
+                        //success function
+                        function(response) {
+                          _parseData(response);
+                        },
+                        //error function
+                        function (msg) {
+                          console.log('ERR_DATA_FETCHING_FAILED - ' + msg.error.message);
+                        }
+                    );
+                  },
+                  //error function
+                  function(authResult) {
+                    console.log("API intializing failed");
+                    if(authResult === 'ERR_UNAUTHORIZED_USER_SIGNED_IN') {
+                      console.log('ERR_UNAUTHORIZED_USER_SIGNED_IN');
+
+                      angular.element(document.querySelector("#promptForAuth"))[0].style.display = null;
+                      //angular.element(document.querySelector("#authorize"))[0].onclick = callback;
+                    }
+                  }
+              );
+            });
+
+
+/*
             angular.element(document).ready(function () {
 
                 buganizerF.initIssueTrackerAPI().then(
@@ -21,7 +61,7 @@
                     function(authResult) {
                         console.log("succeeded in init API - initIssueTrackerAPI");
                         // call function to retrieve bugs by hotlist
-                        buganizerF.getHotlistEntries('AndroidPFeatureAdoption').then(
+                        buganizerF.getHotlistEntries('AndroidOFeatureAdoption').then(
                             //success function
                             function(response) {
                                 _parseData(response);
@@ -39,16 +79,17 @@
                     }
                 );
             });
+            */
 
             function _parseData(response) {
-                console.log('parsing data - _parseData');
+
                 if(!response) {
-                    console.log('Bad Query executed - _parseData');
+                    console.log('ERR_BAD_QUERY');
                     return;
                 }
 
                 if (!response['hotlistEntries']) {
-                    console.log('No data existing - _parseData');
+                    console.log('ERR_NO_DATA_FOUND_OR_CONNECTION_NOT_ESTABLISHED');
                     return;
                 }
 
@@ -64,6 +105,77 @@
                 _sortList();
                 _generateAdoptionMatrix();
                 _updateBugIdNSupportStatus(response);
+            }
+
+            function _getIssueDetails(issue) {
+
+                bugId = issue.issue.issueId;
+                title = issue.issue.issueState.title;
+
+                isSupportStatusFound = false;
+
+                for(var cnt = 0; cnt < issue.issue.issueState.customFields.length; cnt++) {
+
+                    switch(issue.issue.issueState.customFields[cnt].customFieldId)  {
+                        //case '83961': // launch version
+                        case '85051': // Samsung
+                        case '87023': // Next99 > Feature Adoption
+                        case '87079': // Moto
+                        case '88362': // LG
+                            releaseVer = issue.issue.issueState.customFields[cnt].enumValue;
+                            break;
+                        //case '83970': // project lead
+                        case '85108': // Samsung
+                        case '86958': // Next99 > Feature Adoption
+                        case '87095': // Moto
+                        case '88376': // LG
+                            projectLead = issue.issue.issueState.customFields[cnt].textValue;
+                            break;
+                        //case '83966': // feature name
+                        case '85112': // Samsung
+                        case '86964': // Next99 > Feature Adoption
+                        case '87084': // Moto
+                        case '88371': // LG
+                            featureName = issue.issue.issueState.customFields[cnt].enumValue;
+                            break;
+                        //case '83965': // OEM name
+                        case '85120': // Samsung
+                        case '87022': // Next99 > Feature Adoption
+                        case '87074': // Moto
+                        case '88367': // LG
+                            oemName = issue.issue.issueState.customFields[cnt].enumValue;
+                            break;
+                        //case '83871': // region
+                        case '85121': // Samsung
+                        case '86979': // Next99 > Feature Adoption
+                        case '87083': // Moto
+                        case '88430': // LG
+                            region = issue.issue.issueState.customFields[cnt].enumValue;
+                            break;
+                        //case '83872': // marketing product name
+                        case '85125': // Samsung
+                        case '87060': // Next99 > Feature Adoption
+                        case '87078': // Moto
+                        case '88426': // LG
+                            marketingProductName = issue.issue.issueState.customFields[cnt].enumValue;
+                            break;
+                        //case '83929': // supporting status
+                        case '85113': // Samsung
+                        case '87061': // Next99 > Feature Adoption
+                        case '87096': // Moto
+                        case '88368': // LG
+                            supportingStatus = issue.issue.issueState.customFields[cnt].enumValue;
+                            isSupportStatusFound = true;
+
+                            break;
+                    }
+                }
+                // if there was no customFiled for supporting status, it means supporting status is not yet determined.
+                if(!isSupportStatusFound)
+                    supportingStatus = 'TBD';
+
+                if(supportingStatus != 'Yes' && supportingStatus != 'No')
+                    supportingStatus = 'TBD';
             }
 
             function _updateBugIdNSupportStatus(response) {
@@ -188,75 +300,6 @@
                     deviceName.oemName = oemName;
                     $scope.deviceList.push(deviceName);
                 }
-            }
-
-            function _getIssueDetails(issue) {
-
-                bugId = issue.issue.issueId;
-                title = issue.issue.issueState.title;
-
-                isSupportStatusFound = false;
-
-                for(var cnt = 0; cnt < issue.issue.issueState.customFields.length; cnt++) {
-                    switch(issue.issue.issueState.customFields[cnt].customFieldId)  {
-                        //case '83961': // launch version
-                        case '85051': // Samsung
-                        case '87023': // Next99 > Feature Adoption
-                        case '87079': // Moto
-                        case '88362': // LG
-                            releaseVer = issue.issue.issueState.customFields[cnt].enumValue;
-                            break;
-                        //case '83970': // project lead
-                        case '85108': // Samsung
-                        case '86958': // Next99 > Feature Adoption
-                        case '87095': // Moto
-                        case '88376': // LG
-                            projectLead = issue.issue.issueState.customFields[cnt].textValue;
-                            break;
-                        //case '83966': // feature name
-                        case '85112': // Samsung
-                        case '86964': // Next99 > Feature Adoption
-                        case '87084': // Moto
-                        case '88371': // LG
-                            featureName = issue.issue.issueState.customFields[cnt].enumValue;
-                            break;
-                        //case '83965': // OEM name
-                        case '85120': // Samsung
-                        case '87022': // Next99 > Feature Adoption
-                        case '87074': // Moto
-                        case '88367': // LG
-                            oemName = issue.issue.issueState.customFields[cnt].enumValue;
-                            break;
-                        //case '83871': // region
-                        case '85121': // Samsung
-                        case '86979': // Next99 > Feature Adoption
-                        case '87083': // Moto
-                        case '88430': // LG
-                            region = issue.issue.issueState.customFields[cnt].enumValue;
-                            break;
-                        //case '83872': // marketing product name
-                        case '85125': // Samsung
-                        case '87060': // Next99 > Feature Adoption
-                        case '87078': // Moto
-                        case '88426': // LG
-                            marketingProductName = issue.issue.issueState.customFields[cnt].enumValue;
-                            break;
-                        //case '83929': // supporting status
-                        case '85113': // Samsung
-                        case '87061': // Next99 > Feature Adoption
-                        case '87096': // Moto
-                        case '88368': // LG
-                            supportingStatus = issue.issue.issueState.customFields[cnt].enumValue;
-                            isSupportStatusFound = true;
-                            break;
-                    }
-                }
-                // if there was no customFiled for supporting status, it means supporting status is not yet determined.
-                if(!isSupportStatusFound)
-                    supportingStatus = 'TBD';
-
-                if(supportingStatus != 'Yes' && supportingStatus != 'No')
-                    supportingStatus = 'TBD';
             }
 
             function sort_by(field, reverse,primer) {

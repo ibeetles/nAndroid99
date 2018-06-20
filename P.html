@@ -45,12 +45,23 @@
     </nav>
 </div>
 
-<div style="font-family: 'Droid Sans'; margin-bottom: 30px;">
-    <h4 style="font-weight: bold">Feature Adoption Status</h4>
-    <h5>
-        Partner & Device data come from 'Flagship and Fast Follower Schedule - N & O 2017', and feature adoption information is based on OEM TAM response.
-    </h5>
-    <p><i>If nothing shows, please open new tab and navigate to <span class='text-danger'>'plx/'</span> to get credential.</i></p>
+<div style="font-family: 'Roboto'; margin-bottom: 30px;">
+    <div style="float: left; width: 91%;">
+        <h4 style="font-weight: bold">Feature Adoption Status</h4>
+        <P>All these feature adoption plan/status are based on dedicated TAMs' response from their assigned Android partners.</P>
+        <p><span style="font-weight: bold;">Without SSO credential,</span> nothing will be displayed here due to security reason. In such case, please open new tab and navigate to <a href="https://b.corp.google.com" target="_blank">Buganizer</a> and come back/refresh this page. </a></p>
+    </div>
+
+    <div style="float:left; width: 8%; padding-top: 3%" >
+        <!-- <div id = "googleSignIn" class="g-signin2" data-onsuccess="onSignIn" style="display: none"></div>  -->
+        <div id="promptForAuth" style="display:none; padding-top: 30%;">
+            <button id="authorize" ng-click="userSignIn()">
+                <span class="icon"></span>
+                Authorize API
+            </button>
+        </div>
+    </div>
+
 </div>
 
 <div class="tabbable" style="margin-bottom: 18px;">
@@ -119,13 +130,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 <script src="bower_components/angular-smart-table/dist/smart-table.js"></script>
 
+<!--  Google Platform library to integrate Google Sign-in -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<script src='https://login.corp.google.com/javascript_api.js'></script>
 <script src="https://apis.google.com/js/client.js"></script>
 
 <!-- Application Javascript -->
 <script type="text/javascript" src="js/app.js"></script>
-<script type="text/javascript" src="js/service/constVariables.js"></script>
-<script type="text/javascript" src="js/service/constResource.js"></script>
-<script type="text/javascript" src="js/service/apiService.js"></script>
-<script type="text/javascript" src="js/controller/PFeatureCtrl.js"></script>
+<script type="text/javascript" src="js/service/sharable/constVariables.js"></script>
+<script type="text/javascript" src="js/service/sharable/constResource.js"></script>
+<script type="text/javascript" src="js/service/buganizerAPI/apiService.js"></script>
+<script type="text/javascript" src="js/controller/buganizerAPI/PFeatureCtrl.js"></script>
 </body>
 </html>

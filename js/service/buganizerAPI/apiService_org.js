@@ -3,7 +3,7 @@
     'use strict';
 
     angular.module('ngAndroidNext99')
-        .service('buganizerF', function($q, CONST) {
+        .service('buganizerF_Org', function($q, CONST) {
 
             var deferred;
             var isAPILoaded = false;

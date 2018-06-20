@@ -3,7 +3,7 @@
     'use strict';
 
     angular.module('ngAndroidNext99')
-    .controller('ngNFeatureAdoptionListCtrl', function($scope,dremelF) {
+    .controller('ngNFeatureAdoptionListCtrl', function($scope,dremelF, CONST) {
 
         $scope.jsonFeatureAdoptionList = [];
 
@@ -14,7 +14,40 @@
 
         $scope.buganizerdate = '';
 
+        $scope.userName = '';
+        $scope.userImage = '';
+        $scope.userEmail = '';
+
+        var scopePlx = CONST.SCOPES_PLX;
+        var plxClientId = CONST.CLIENT_ID_PLX;
+
+        function onSignIn(googleUser) {
+
+          if(!isAuthorizedUserSignedIn()) {
+            var GoogleAuth = gapi.auth2.getAuthInstance();
+            GoogleAuth.disconnect();
+            console.log('ACK_LOGOUT');
+
+            alert("Please sign in with Corp account. Otherwise, the tracker won't be allowed to access Dremel database");
+            //window.location.reload(true);
+          }
+
+          /*  var profile = googleUser.getBasicProfile();
+            $scope.userName = profile.getName();
+            $scope.userImage = profile.getImageUrl();
+            $scope.userEmail = profile.getEmail();
+
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            //console.log('Name: ' + profile.getName());
+            //console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            */
+        }
+        // attach onSignIn to window.onSignIn
+        window.onSignIn = onSignIn;
+
         $scope.init = function () {
+          console.log('$scope.init called');
             var yesterday = new Date(Date.now() - 86400000);
             var dd = yesterday.getDate();
             var mm = yesterday.getMonth() + 1;
@@ -23,10 +56,68 @@
             $scope.buganizerdate = mm+'/'+dd+'/'+yyyy+'.';
         }
 
-        angular.element(document).ready(function () {
-            var currentdate = new Date();
-            console.log('angular.element.ready - ngNFeatureAdoptionListCtrl - ' + currentdate.getMilliseconds());
+        function isAuthorizedUserSignedIn() {
+          var profile = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
+          var email = profile.getEmail();
+          console.log('Email : ' + email);
+          var pos = email.search('@');
+          var emailDomain = email.slice(pos+1);
 
+          if(emailDomain === 'google.com')
+            return true;
+          return false;
+        }
+
+        angular.element(document).ready(function () {
+
+            try {
+              //
+              console.log('angular.element(document).ready called');
+
+              aplos.util.googleapi.setClientId(plxClientId);
+
+              aplos.util.googleapi.setNeedsAuthFunction(function (callback) {
+                gapi.auth2.getAuthInstance().signIn().then(function () {
+                  window.location.reload(true);
+                });
+              });
+
+              // Forces a request for authorization when the user first hits your
+              // application (instead of waiting for a data load)
+              var gapiAuthPromise = aplos.util.googleapi.authorize(scopePlx,true);
+              gapiAuthPromise.then(
+                  function () {
+
+                    dremelF.executeSQL('NFeature').then(
+                        // success function
+                        function (jsonData) {
+                          $scope.jsonFeatureAdoptionList = jsonData;
+
+                          if (_validateJsonData($scope.jsonFeatureAdoptionList) === false) {
+                            console.log("ACK_SUCCESS_EXECUTE_SQL_BUT_NO_DATA_FOUND");
+                          } else {
+                            console.log("ACK_SUCCESS_EXECUTE_SQL_STARTING_PARSING_DATA");
+                            _parseData();
+                          }
+                        },
+                        // error function
+                        function (e) {
+                          _onDataError(e);  // Failed to retrieve Market List data (Welcome.html)
+
+                          if (e.statusCode === 'PERMISSION_DENIED')
+                            console.log("ERR_PERMISSION_DENIED_NAVIGATE_TO_PLX");
+                        }
+                    );
+                  },
+                  function (error) {
+                    console.log(error.error.message);
+                  }
+              );
+            } catch (error) {
+                console.log(error.message);
+            }
+
+            /*
             dremelF.executeSQL('NFeature').then(
                 // success function
                 function(jsonData) {
@@ -47,6 +138,7 @@
                         console.log("Please open new tab and hit 'plx/ to get SSO credential - dremelF.executeSQL");
                 }
             );
+            */
         });
 
         function _parseData() {
@@ -123,7 +215,6 @@
                 $scope.featureList.features.push(feature);
             }
         }
-
 
         function _getOemListNDeviceNo(issue) {
             var bOEMFound = false;

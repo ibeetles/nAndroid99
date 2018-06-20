@@ -20,6 +20,10 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Droid+Sans">
+
+     <!-- Goolge Platform library to integrate Google Sign-in -->
+    <meta name="google-signin-client_id" content="153836130898-4kdgg79r7r4pul1mf3rcf49kddcv7qkk.apps.googleusercontent.com">
+
     <link href="css/main.css" rel="stylesheet">
 </head>
 
@@ -44,14 +48,14 @@
     </nav>
 </div>
 
-<div style="font-family: 'Droid Sans'; margin-bottom: 30px;">
-    <h4 style="font-weight: bold">Feature Adoption Status</h4>
-    <h5>
-        Partner & Device data come from 'Flagship and Fast Follower Schedule - N & O 2017', and feature adoption information is based on OEM TAM response. Please note that current status information is a snapshot of adoption information as of <span class='text-danger'> {{buganizerdate}}</span>
-    </h5>
-    <p>If you want to see the real time based status, please click <a href="https://mincheoulkim.users.x20web.corp.google.com/www/nAndroid99/index.html" style="text-decoration: none;">here</a><i class='text-danger'>(go/ape-fas-int)</i>. You may need to sign-in again including SSO OR may see nothing as this is in alpha status.</p>
-    <p><i>If nothing shows, please open new tab and navigate to <span class='text-danger'>'plx/'</span> to get credential.</i></p>
+<div style="font-family:'Roboto'; margin-bottom: 30px;">
+    <div style="float: left; ">
+        <h4 style="font-weight: bold">Feature Adoption Status</h4>
+        <p>All these feature adoption plan/status are based on dedicated TAMs' response from their assigned Android partners. Please note that current status is a snapshot of adoption information as of <span class='text-danger'> {{buganizerdate}}</span> If you want to see the real time based status, please click <a href="https://mincheoulkim.users.x20web.corp.google.com/www/nAndroid99/index.html" style="text-decoration: none;">here</a><i class='text-danger'>(go/ape-fas-int)</i></p>
+        <p><span style="font-weight: bold;">Without SSO credential,</span> nothing will be displayed here due to security reason. In such case, please open new tab and navigate to <a href="https://b.corp.google.com" target="_blank">Buganizer</a> and come back/refresh this page. </a></p>
+    </div>
 </div>
+
 
 <div class="tabbable" style="margin-bottom: 18px;">
     <div style="float:left; width:80%;">
@@ -120,21 +124,19 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 <script src="bower_components/angular-smart-table/dist/smart-table.js"></script> <!--smart table  -->
 
-<!--Aplos --><!--
-            <script src="https://data.corp.google.com/aplos/versions/aplos-v1_2.js"></script>
-            <script src='https://login.corp.google.com/javascript_api.js'></script>
-            -->
+<!--  Google Platform library to integrate Google Sign-in -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 
 <!--Aplos -->
-<!--upgraded from aplos-v1_2.js to aplos-v1_2.js. Refer to https://g3doc.corp.google.com/company/teams/aplos/js/d3upgrade.md?cl=head -->
-<script src="https://data.corp.google.com/aplos/versions/aplos-v1_3.js"></script>
+<!-- upgrade from aplos-v1_2.js to Aplos JS v2_0 Migration  see  go/aplos-legacy-data-service-turndown  -->
+<script type="text/javascript" src="https://static.corp.google.com/visualization/aplos/bundles/aplos-v2_0-optimized.js"></script>
 <script src='https://login.corp.google.com/javascript_api.js'></script>
 
 <!-- Application Javascript -->
 <script type="text/javascript" src="js/app.js"></script>
-<script type="text/javascript" src="js/service/constVariables.js"></script>
-<script type="text/javascript" src="js/service/constResource.js"></script>
-<script type="text/javascript" src="js/service/dataService.js"></script>
-<script type="text/javascript" src="js/controller/OFeatureDremelCtrl.js"></script>
+<script type="text/javascript" src="js/service/sharable/constVariables.js"></script>
+<script type="text/javascript" src="js/service/sharable/constResource.js"></script>
+<script type="text/javascript" src="js/service/dremelAPI/dataService.js"></script>
+<script type="text/javascript" src="js/controller/dremelAPI/OFeatureDremelCtrl.js"></script>
 </body>
 </html>

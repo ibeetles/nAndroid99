@@ -3,7 +3,7 @@
     'use strict';
 
     angular.module('ngAndroidNext99')
-        .controller('ngPFeatureAdoptionListCtrl', function($scope,dremelF) {
+        .controller('ngPFeatureAdoptionListCtrl', function($scope,dremelF,CONST) {
 
             $scope.jsonFeatureAdoptionList = [];
 
@@ -14,6 +14,9 @@
 
             $scope.buganizerdate = '';
 
+            var scopePlx = CONST.SCOPES_PLX;
+            var plxClientId = CONST.CLIENT_ID_PLX;
+
             $scope.init = function () {
                 var yesterday = new Date(Date.now() - 86400000);
                 var dd = yesterday.getDate();
@@ -23,6 +26,31 @@
                 $scope.buganizerdate = mm+'/'+dd+'/'+yyyy+'.';
             }
 
+            function onSignIn(googleUser) {
+              if(!isAuthorizedUserSignedIn()) {
+                var GoogleAuth = gapi.auth2.getAuthInstance();
+                GoogleAuth.disconnect();
+                console.log('ACK_LOGOUT');
+
+                alert("Please sign in with Corp account. Otherwise, the tracker won't be allowed to access Dremel database");
+                //window.location.reload(true);
+              }
+
+              /*  var profile = googleUser.getBasicProfile();
+                $scope.userName = profile.getName();
+                $scope.userImage = profile.getImageUrl();
+                $scope.userEmail = profile.getEmail();
+
+                console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+                //console.log('Name: ' + profile.getName());
+                //console.log('Image URL: ' + profile.getImageUrl());
+                console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+                */
+            }
+            // attach onSignIn to window.onSignIn
+            window.onSignIn = onSignIn;
+
+            /*
             angular.element(document).ready(function () {
                 dremelF.executeSQL('PFeature').then(
                     // success function
@@ -45,6 +73,66 @@
                     }
                 );
             });
+            */
+
+          function isAuthorizedUserSignedIn() {
+            var profile = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
+            var email = profile.getEmail();
+            console.log('Email : ' + email);
+            var pos = email.search('@');
+            var emailDomain = email.slice(pos+1);
+
+            if(emailDomain === 'google.com')
+              return true;
+            return false;
+          }
+
+          angular.element(document).ready(function () {
+
+            try {
+              aplos.util.googleapi.setClientId(plxClientId);
+              aplos.util.googleapi.setNeedsAuthFunction(function (callback) {
+                  gapi.auth2.getAuthInstance().signIn().then(function () {
+                  window.location.reload(true);
+                });
+              });
+
+              // Forces a request for authorization when the user first hits your
+              // application (instead of waiting for a data load)
+              var gapiAuthPromise = aplos.util.googleapi.authorize(scopePlx,true);
+
+              gapiAuthPromise.then(
+                  function () {
+                    dremelF.executeSQL('PFeature').then(
+                        // success function
+                        function (jsonData) {
+                          $scope.jsonFeatureAdoptionList = jsonData;
+
+                          if (_validateJsonData($scope.jsonFeatureAdoptionList) === false) {
+                            console.log("ACK_SUCCESS_EXECUTE_SQL_BUT_NO_DATA_FOUND");
+                          } else {
+                            console.log("ACK_SUCCESS_EXECUTE_SQL_STARTING_PARSING_DATA");
+                            _parseData();
+                          }
+                        },
+                        // error function
+                        function (e) {
+                          _onDataError(e);  // Failed to retrieve Market List data (Welcome.html)
+
+                          if (e.statusCode === 'PERMISSION_DENIED')
+                            console.log("ERR_PERMISSION_DENIED_NAVIGATE_TO_PLX");
+                        }
+                    );
+                  },
+                  function (error) {
+                    console.log(error.error.message);
+                  }
+              );
+            } catch(err) {
+              console.log(error.error.message);
+            }
+          });
+
 
             function _parseData() {
                 for(var i = 0; i < $scope.jsonFeatureAdoptionList.length; i++) {
