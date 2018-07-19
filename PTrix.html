@@ -118,8 +118,8 @@
 
                 <tbody>
                     <tr ng-repeat="androidfeature in featureList.features | featureName:featureNameFilter | featureGroup:featureGroupFilter " >
-                        <th scope="row" class="text-center" style="vertical-align: middle"><span ng-if="androidfeature.newGroup == true" >{{androidfeature.group}}</span></th>
-                        <th scope="row" class="text-center" style="vertical-align: middle" data-toggle="tooltip" data-placement="right" title={{androidfeature.group}} >{{androidfeature.name}}</th>
+                        <th scope="row" class="text-center headcol" style="vertical-align: middle" ><span ng-if="androidfeature.newGroup == true" >{{androidfeature.group}}</span></th>
+                        <th scope="row" class="text-center headcol" style="vertical-align: middle" data-toggle="tooltip" data-placement="right" title={{androidfeature.group}} >{{androidfeature.name}}</th>
 
                         <td ng-repeat="availability in androidfeature.availability " class="text-center" style="vertical-align: middle">
                               <span ng-if="availability.availability == 'Yes'">
