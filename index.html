@@ -68,9 +68,9 @@
 <div class="tabbable" style="margin-bottom: 18px;">
     <div style="float:left; width:80%;">
         <ul class="nav nav-tabs" ng-cloak>
-            <li class="active"><a href="#">N/N MR1</a></li>
-            <li class="nav-link"><a href="O.html">O</a></li>
-            <li class="nav-link"><a href="P.html">P</a></li>
+            <li class="active"><a href="#">Nougat</a></li>
+            <li class="nav-link"><a href="O.html">Oreo</a></li>
+            <li class="nav-link"><a href="P.html">Pie</a></li>
         </ul>
     </div>
     <div class = "tbllegend">
@@ -104,18 +104,18 @@
                     <th scope="row" class="text-center" style="vertical-align: middle">{{androidfeature.name}}</th>
                     <td ng-repeat="availability in androidfeature.availability " class="text-center" style="vertical-align: middle">
                         <a ng-href="https://b.corp.google.com/issues/{{availability.bug}}" target="_blank">
-                                    <span ng-if="availability.availability == 'Yes'">
-                                    <span class="glyphicon glyphicon-ok text-success" data-toggle="tooltip" data-placement="right" title="b/{{availability.bug}}" ></span>
-                                </span>
+                                <span ng-if="availability.availability == 'Yes'">
+                                <span class="glyphicon glyphicon-ok text-success" data-toggle="tooltip" data-placement="right" title="b/{{availability.bug}}" ></span>
+                            </span>
                             <span ng-if="availability.availability == 'No'">
-                                    <span class="glyphicon glyphicon-remove text-warning" data-toggle="tooltip" data-placement="right" title="b/{{availability.bug}}"></span>
-                                </span>
+                               <span class="glyphicon glyphicon-remove text-warning" data-toggle="tooltip" data-placement="right" title="b/{{availability.bug}}"></span>
+                            </span>
                             <span ng-if="availability.availability == 'TBD'">
-                                   <span class="glyphicon glyphicon-option-horizontal text-muted" data-toggle="tooltip" data-placement="right" title="b/{{availability.bug}}"></span>
-                                </span>
+                               <span class="glyphicon glyphicon-option-horizontal text-muted" data-toggle="tooltip" data-placement="right" title="b/{{availability.bug}}"></span>
+                            </span>
                             <span ng-if="availability.availability == 'Unknown'">
-                                   <span class="glyphicon glyphicon-asterisk text-muted" data-toggle="tooltip" data-placement="right" title="No bug filed and status unknown"></span>
-                                </span>
+                               <span class="glyphicon glyphicon-asterisk text-muted" data-toggle="tooltip" data-placement="right" title="No bug filed and status unknown"></span>
+                            </span>
                         </a>
                     </td>
                 </tr>
